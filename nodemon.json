@@ -1,5 +1,5 @@
 {
     "env":{
-        "MONO_ATLAS_PW":"Roshan"
+        "MONGO_ATLAS_PW":"Roshan"
     }
 }

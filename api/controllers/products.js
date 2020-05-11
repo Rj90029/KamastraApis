@@ -1,7 +1,11 @@
 const Product = require('../models/products');
 
+// query string can be passed. 
+// query params name should be same as fields in db collections
 exports.get_all_products = (req,res,next)=>{
-    Product.find()
+    
+    var query = req.query;
+    Product.find(query)
     .then(docs=>{
         const response = {
             count: docs.length,
@@ -16,6 +20,30 @@ exports.get_all_products = (req,res,next)=>{
         })
     });
     
+}
+
+exports.get_products_by_category = (req,res,next)=>{
+    const category =req.query.category;
+    const subCategory = req.query.subCategory;
+    const query = {
+        "category":category,
+        "subCategory":subCategory
+    }
+    console.log('hello'+category, subCategory);
+    Product.find(query)
+    .then(docs=>{
+        const response = {
+            count: docs.length,
+            products:docs
+        }
+        res.status(200).json(response);
+    })
+    .catch(err=>{
+        console.log(err);
+        res.status(500).json({
+            error:err
+        })
+    });
 }
 
 exports.add_product = (req,res,next)=>{
